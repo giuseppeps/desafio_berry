@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
+import { getServerSession } from "next-auth/next";
+import { NextResponse } from "next/server";
+import { authOptions } from "../[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -13,14 +13,13 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, content } = await req.json();
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        author: { connect: { id: session.user?.id } },
-      },
+    const post = await prisma.post.findUnique({
+      where: { id: params.id },
     });
+
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
 
     return NextResponse.json({ post });
   } catch (error: any) {

@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/[...nextauth]/route";
-import { redirect } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
+import { getServerSession } from "next-auth/next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { authOptions } from "../../api/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +15,7 @@ export default async function Posts() {
 
 	const posts = await prisma.post.findMany({
 		where: {
-			authorId: session.user?.id,
+			userId: session.user?.id,
 		},
 		orderBy: {
 			createdAt: "desc",
