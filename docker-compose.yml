@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: meu_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: meubanco
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    restart: always
+    environment:
+      DATABASE_URL: "postgresql://postgres:senha@postgres:5432/meubanco"
+    ports:
+      - "3000:3000" 
+    working_dir: /app/src/app/api
+    depends_on:
+      - postgres
+    command: npm run dev
+
+volumes:
+  postgres_data:
