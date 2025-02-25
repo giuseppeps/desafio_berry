@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+--------------------------------------------------------
+                       Teste 
+--------------------------------------------------------
 
-## Getting Started
+CRUD básico para de user e posts.
 
-First, run the development server:
+--------------------------------------------------------
+                   Estrutura do Projeto
+--------------------------------------------------------
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Este projeto foi desenvolvido utilizando **Next.js** e está dividido em três principais seções:
+
+1. **Front-end**:
+   - Localização: `app/(locale)`
+   - Contém todas as páginas e componentes responsáveis pela interface com o usuário.
+   - Utiliza a estrutura de **Rotas** do Next.js baseada em arquivos, com páginas específicas para cada localidade (locale).
+
+2. **Back-end**:
+   - Localização: `app/api`
+   - Contém os endpoints da API do projeto.
+   - Utiliza a funcionalidade de API do Next.js para criação de APIs simples e escaláveis com base em arquivos de rota.
+
+3. **Requisições (Actions)**:
+   - Localização: `src/action`
+   - Contém funções responsáveis pela comunicação com a API e a lógica de processamento de dados.
+
+--------------------------------------------------------
+                Configuração do Docker
+--------------------------------------------------------
+
+O projeto foi configurado para rodar facilmente dentro de containers Docker, garantindo um ambiente consistente em todas as máquinas e facilitando o deploy.
+
+--------------------------------------------------------
+             Como rodar o projeto com Docker
+--------------------------------------------------------
+
+1. **Build da imagem Docker**:
+   Na raiz do projeto, execute o comando para construir as imagens do Docker:
+   
+
+
+   docker-compose build
+
+2. **Subir os containers**:
+   Em seguida, rode os containers utilizando:
+
+```
+   docker-compose up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   
+Isso iniciará o back-end (API) e o banco de dados PostgreSQL em containers Docker.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Verificar no navegador**:
+O projeto estará disponível no navegador em `http://localhost:3000` para o front-end e a API estará acessível na mesma URL para fazer requisições.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+--------------------------------------------------------
+         Como rodar o projeto localmente
+--------------------------------------------------------
 
-## Learn More
+Caso prefira rodar o projeto sem Docker, siga os passos abaixo:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Instalar dependências**:
+Primeiro, instale as dependências do projeto com o comando:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+   npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Rodar o projeto**:
+   Para iniciar a aplicação, use os comandos a seguir:
 
-## Deploy on Vercel
+   Para o ambiente de desenvolvimento:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+   npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Para o ambiente de produção:
+
+   Primeiro, gere a build de produção:
+
+```
+   npm run build
+```
+
+   Depois, inicie o servidor de produção:
+
+```
+   npm start
+```
+
+--------------------------------------------------------
+                     Dependências
+--------------------------------------------------------
+
+- Next.js
+- Prisma
+- bcryptjs
+- Docker

@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
+  console.log("POST request received", req);
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -18,9 +19,11 @@ export async function POST(req: Request) {
       data: {
         title,
         content,
-        author: { connect: { id: session.user?.id } },
+        userId: session.user?.id,
       },
     });
+
+    console.log("Created post:", post);
 
     return NextResponse.json({ post });
   } catch (error: any) {
