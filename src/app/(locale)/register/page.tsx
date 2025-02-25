@@ -4,6 +4,7 @@ import type React from "react";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { register } from "@/src/action/register";
 
 export default function Register() {
 	const [name, setName] = useState("");
@@ -13,19 +14,19 @@ export default function Register() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const response = await fetch("/api/register", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ name, email, password }),
-		});
+		const response = await register(name, email, password);
 
-		if (response.ok) {
+		console.log("response", response);
+
+		if (response.success) {
 			router.push("/login");
 		} else {
 			console.error("Registration failed");
 		}
+	};
+
+	const handleGoToLogin = () => {
+		router.push("/login");
 	};
 
 	return (
@@ -33,7 +34,7 @@ export default function Register() {
 			<div className="max-w-md w-full space-y-8">
 				<div>
 					<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-						Create your account
+						Cria uma conta braba
 					</h2>
 				</div>
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -41,7 +42,7 @@ export default function Register() {
 					<div className="rounded-md shadow-sm -space-y-px">
 						<div>
 							<label htmlFor="name" className="sr-only">
-								Name
+								Escreve seu nome
 							</label>
 							<input
 								id="name"
@@ -49,14 +50,14 @@ export default function Register() {
 								type="text"
 								required
 								className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-								placeholder="Name"
+								placeholder="Escreve seu nome"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 							/>
 						</div>
 						<div>
 							<label htmlFor="email-address" className="sr-only">
-								Email address
+								Agora seu email
 							</label>
 							<input
 								id="email-address"
@@ -65,14 +66,14 @@ export default function Register() {
 								autoComplete="email"
 								required
 								className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-								placeholder="Email address"
+								placeholder="Agora seu email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
 						<div>
 							<label htmlFor="password" className="sr-only">
-								Password
+								Agora sua senha
 							</label>
 							<input
 								id="password"
@@ -81,7 +82,7 @@ export default function Register() {
 								autoComplete="new-password"
 								required
 								className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-								placeholder="Password"
+								placeholder="Agora sua senha"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
@@ -91,9 +92,18 @@ export default function Register() {
 					<div>
 						<button
 							type="submit"
-							className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+							className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
 						>
-							Register
+							Se registra ai
+						</button>
+					</div>
+					<div>
+						<button
+							onClick={handleGoToLogin}
+							type="button"
+							className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
+						>
+							Ja tem conta? vaza daq
 						</button>
 					</div>
 				</form>
